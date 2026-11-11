@@ -1,0 +1,25 @@
+{
+  "short_name": "SAPIENS",
+  "name": "SAPIENS | Luxury Sartorial Atelier",
+  "description": "High-end bespoke suits, tailored menswear, footwear, and luxury lifestyle collection.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x48 72x72 96x96 128x128 192x192 256x256 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#FF5500",
+  "background_color": "#FFFFFF",
+  "categories": ["shopping", "lifestyle", "fashion"]
+}

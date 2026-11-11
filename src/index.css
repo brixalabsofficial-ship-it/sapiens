@@ -30,3 +30,27 @@
   transform: translateY(-6px);
   box-shadow: 0 20px 35px -12px rgba(255, 85, 0, 0.12), 0 8px 16px -6px rgba(0, 0, 0, 0.06);
 }
+
+/* PWA App-like Touch Behavior & iOS Auto-Zoom Prevention */
+html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: none;
+}
+
+/* Prevent iOS Safari from auto-zooming when tapping inputs (<16px triggers zoom) */
+input, select, textarea {
+  font-size: 16px !important;
+  touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+  input, select, textarea {
+    font-size: inherit !important;
+  }
+}
+
+/* Disable tap grey box highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
