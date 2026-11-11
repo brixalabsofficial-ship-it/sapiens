@@ -249,13 +249,10 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* Floating Mobile Bottom Navigation Bar with SAPIENS Orange Accents */}
+      {/* Floating Mobile Bottom Navigation Bar with Pure Glassmorphism */}
       <div className="lg:hidden fixed bottom-4 inset-x-4 z-40">
-        <nav className="relative bg-white/92 backdrop-blur-2xl border border-orange-500/25 px-2 py-1.5 shadow-[0_12px_36px_rgba(255,85,0,0.14),0_4px_16px_rgba(0,0,0,0.08)] rounded-2xl flex items-center justify-around text-slate-800 overflow-hidden">
+        <nav className="relative bg-white/75 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 ring-1 ring-black/[0.05] px-2 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)] rounded-2xl flex items-center justify-around text-slate-800 overflow-hidden">
           
-          {/* Subtle Top Accent Shimmer Line */}
-          <div className="absolute top-0 inset-x-6 h-[2px] bg-gradient-to-r from-transparent via-[#FF5500] to-transparent opacity-80" />
-
           {/* Home Link */}
           <Link
             to="/"
