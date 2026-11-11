@@ -64,14 +64,14 @@ export default function Home() {
       {/* 1. CLEAN & SIMPLE LUXURY HERO SECTION */}
       <section className="relative overflow-hidden bg-[#FAF9F6] border-b border-black/[0.06]">
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Left Column: Clean Editorial Messaging */}
-            <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left space-y-5 sm:space-y-6">
+            {/* Left Column: Clean Editorial Messaging with Generous Spacing */}
+            <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left space-y-7 sm:space-y-8">
               
               {/* Season Minimal Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-black/[0.08] rounded-full shadow-xs">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-black/[0.08] rounded-full shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
                 <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-800 font-bold">
                   Autumn / Winter 2026 Collection
@@ -79,31 +79,31 @@ export default function Home() {
               </div>
 
               {/* Bold, Clean Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.08]">
-                Bespoke Elegance.
-                <span className="block text-[#FF5500] font-serif italic font-normal mt-1">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.08] space-y-1">
+                <span className="block">Bespoke Elegance.</span>
+                <span className="block text-[#FF5500] font-serif italic font-normal mt-1.5">
                   Modern Sartorial.
                 </span>
               </h1>
 
-              {/* 1-Sentence Subtitle - Direct and clean */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-lg font-normal leading-relaxed">
+              {/* 1-Sentence Subtitle with clean max-width */}
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-lg font-normal leading-relaxed px-2 sm:px-0">
                 Handcrafted Italian wool and architectural tailoring, engineered for life's defining occasions.
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2 w-full">
+              {/* Action Buttons: Always Horizontal on Mobile & Desktop */}
+              <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-3 sm:pt-4 w-full max-w-md">
                 <Link
                   to="/shop"
-                  className="px-7 py-3.5 rounded-full bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#FF5500] transition-colors shadow-md flex items-center gap-2 group active:scale-95"
+                  className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-black text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[#FF5500] transition-colors shadow-md flex items-center justify-center gap-2 group whitespace-nowrap active:scale-95"
                 >
                   <span>Explore Collection</span>
-                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform shrink-0" />
                 </Link>
 
                 <Link
                   to="/shop?category=Men"
-                  className="px-6 py-3.5 rounded-full bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all border border-slate-300 shadow-xs flex items-center gap-2 active:scale-95"
+                  className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-slate-800 text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all border border-slate-300 shadow-xs flex items-center justify-center text-center whitespace-nowrap active:scale-95"
                 >
                   <span>Occasion Suits</span>
                 </Link>
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
 
             {/* Right Column / Mobile Hero Visual */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <div className="lg:col-span-5 flex justify-center lg:justify-end pt-4 lg:pt-0">
               <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-xl border-2 border-white group">
                 <img
                   src="https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg"
