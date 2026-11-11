@@ -194,14 +194,110 @@ export default function Home() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-12">
       
-      {/* 1. CLEAN & SIMPLE LUXURY HERO SECTION */}
+      {/* 1. HERO SECTION: FULL SCREEN ON MOBILE & EDITORIAL 2-COL ON DESKTOP */}
       <section className="relative overflow-hidden bg-[#FAF9F6] border-b border-black/[0.06]">
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* MOBILE HERO: 100% Full Screen Immersive Editorial Hero */}
+        <div className="lg:hidden relative w-full h-[calc(100dvh-4rem)] min-h-[580px] overflow-hidden flex flex-col justify-between p-5 pb-24 select-none">
+          
+          {/* Full-bleed background sliding images */}
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.img
+              key={activeSlide.id}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              src={activeSlide.image}
+              alt={activeSlide.title}
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.currentTarget.src = 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg';
+              }}
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            />
+          </AnimatePresence>
+
+          {/* High-Contrast Editorial Vignette Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/40 to-black/35 pointer-events-none" />
+
+          {/* Mobile Top Row: Season Pill + Slide Counter */}
+          <div className="relative z-10 flex items-center justify-between pt-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/45 backdrop-blur-md border border-white/20 rounded-full text-white text-[10px] font-mono uppercase tracking-[0.2em] font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] animate-pulse" />
+              <span>Autumn / Winter 2026</span>
+            </div>
+
+            <div className="bg-black/45 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest border border-white/20">
+              {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
+            </div>
+          </div>
+
+          {/* Mobile Bottom Content Block */}
+          <div className="relative z-10 space-y-4">
             
-            {/* Left Column: Clean Editorial Messaging with Generous Spacing */}
-            <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left space-y-7 sm:space-y-8">
+            {/* Active Look Badge */}
+            <div className="inline-block bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest font-semibold">
+              {activeSlide.badge} • {activeSlide.title}
+            </div>
+
+            {/* High-Impact Headline */}
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-[1.06]">
+              Bespoke Elegance.
+              <span className="block text-[#FF5500] font-serif italic font-normal mt-0.5">
+                Modern Sartorial.
+              </span>
+            </h1>
+
+            {/* Direct 1-Sentence Subtitle */}
+            <p className="text-xs sm:text-sm text-white/80 font-normal leading-relaxed max-w-sm">
+              Handcrafted Italian wool and architectural tailoring, engineered for life's defining occasions.
+            </p>
+
+            {/* Action Buttons: Horizontal on Mobile */}
+            <div className="flex flex-row items-center gap-2.5 pt-1 w-full">
+              <Link
+                to="/shop"
+                className="flex-1 py-3.5 rounded-full bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5 shadow-lg active:scale-95"
+              >
+                <span>Explore</span>
+                <ArrowRight size={14} />
+              </Link>
+
+              <Link
+                to="/shop?category=Men"
+                className="flex-1 py-3.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 text-xs font-bold uppercase tracking-wider text-center active:scale-95"
+              >
+                <span>Occasion Suits</span>
+              </Link>
+            </div>
+
+            {/* Slide Navigation Dashes */}
+            <div className="flex items-center justify-center gap-1.5 pt-1">
+              {HERO_SLIDES.map((slide, idx) => (
+                <button
+                  key={slide.id}
+                  onClick={() => goToSlide(idx)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    currentSlide === idx 
+                      ? 'w-6 bg-[#FF5500]' 
+                      : 'w-2 bg-white/50'
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+        {/* DESKTOP HERO: Clean 2-Column Editorial Stage */}
+        <div className="hidden lg:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="grid grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column: Clean Editorial Messaging */}
+            <div className="col-span-7 flex flex-col items-start text-left space-y-7">
               
               {/* Season Minimal Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-black/[0.08] rounded-full shadow-xs">
@@ -212,23 +308,23 @@ export default function Home() {
               </div>
 
               {/* Bold, Clean Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.08] space-y-1">
+              <h1 className="text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.08] space-y-1">
                 <span className="block">Bespoke Elegance.</span>
                 <span className="block text-[#FF5500] font-serif italic font-normal mt-1.5">
                   Modern Sartorial.
                 </span>
               </h1>
 
-              {/* 1-Sentence Subtitle with clean max-width */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-lg font-normal leading-relaxed px-2 sm:px-0">
+              {/* 1-Sentence Subtitle */}
+              <p className="text-base lg:text-lg text-slate-600 max-w-lg font-normal leading-relaxed">
                 Handcrafted Italian wool and architectural tailoring, engineered for life's defining occasions.
               </p>
 
-              {/* Action Buttons: Always Horizontal on Mobile & Desktop */}
-              <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-3 sm:pt-4 w-full max-w-md">
+              {/* Horizontal Action Buttons */}
+              <div className="flex flex-row items-center gap-4 pt-3 w-full max-w-md">
                 <Link
                   to="/shop"
-                  className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-black text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[#FF5500] transition-colors shadow-md flex items-center justify-center gap-2 group whitespace-nowrap active:scale-95"
+                  className="px-7 py-3.5 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-[#FF5500] transition-colors shadow-md flex items-center justify-center gap-2 group whitespace-nowrap active:scale-95"
                 >
                   <span>Explore Collection</span>
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform shrink-0" />
@@ -236,7 +332,7 @@ export default function Home() {
 
                 <Link
                   to="/shop?category=Men"
-                  className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-slate-800 text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all border border-slate-300 shadow-xs flex items-center justify-center text-center whitespace-nowrap active:scale-95"
+                  className="px-7 py-3.5 rounded-full bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all border border-slate-300 shadow-xs flex items-center justify-center text-center whitespace-nowrap active:scale-95"
                 >
                   <span>Occasion Suits</span>
                 </Link>
@@ -244,9 +340,9 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column / Mobile Hero Visual with Smooth Slide Animation */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end pt-4 lg:pt-0">
-              <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl border-2 border-white group select-none">
+            {/* Right Column: Sliding 3:4 Portrait Stage */}
+            <div className="col-span-5 flex justify-end">
+              <div className="relative w-full max-w-[420px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl border-2 border-white group select-none">
                 
                 {/* Sliding Image Stage */}
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -267,7 +363,7 @@ export default function Home() {
                   />
                 </AnimatePresence>
 
-                {/* Subtle Gradient Overlay for contrast */}
+                {/* Subtle Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/25 pointer-events-none" />
 
                 {/* Top Corner Slide Counter */}
@@ -275,7 +371,7 @@ export default function Home() {
                   {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
                 </div>
 
-                {/* Arrow Controls (Smooth hover on desktop) */}
+                {/* Desktop Arrow Controls */}
                 <button
                   onClick={prevSlide}
                   className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/75 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer active:scale-90"
