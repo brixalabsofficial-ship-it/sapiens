@@ -423,37 +423,37 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 4 Category Clean Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5">
+        {/* 4 Category Editorial Full-Bleed Lookbook Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5">
           {CATEGORIES_DATA.map((cat, idx) => (
             <Link
               key={idx}
               to={`/shop?category=${cat.category}`}
-              className="sapiens-modern-card group flex flex-col bg-white rounded-none sm:rounded-md overflow-hidden border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+              className="group relative aspect-[3/4] w-full overflow-hidden rounded-none sm:rounded-md bg-slate-900 shadow-md block border border-black/5"
             >
-              <div className="relative aspect-[4/5] sm:aspect-square w-full overflow-hidden flex items-center justify-center bg-slate-100">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
-                  }}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
-                />
-              </div>
+              {/* Full-Bleed Image Spanning 100% of the Card */}
+              <img
+                src={cat.image}
+                alt={cat.name}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
+                }}
+                className="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 ease-out brightness-[0.92]"
+              />
 
-              <div className="p-2.5 sm:p-3 flex items-center justify-between">
-                <div>
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#FF5500] transition-colors line-clamp-1">
+              {/* Bottom Editorial Dark Gradient Overlay with High-Contrast Typography */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-3 sm:p-5">
+                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FF5500] font-bold mb-1">
+                  {cat.itemCount}
+                </span>
+                <div className="flex items-end justify-between">
+                  <h3 className="text-xs sm:text-base font-black text-white uppercase tracking-tight group-hover:text-[#FF5500] transition-colors leading-tight">
                     {cat.name}
                   </h3>
-                  <span className="text-[10px] sm:text-xs text-slate-400 font-medium">
-                    {cat.itemCount}
-                  </span>
-                </div>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                  <ArrowRight size={12} />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors shrink-0 ml-1.5">
+                    <ArrowRight size={13} />
+                  </div>
                 </div>
               </div>
             </Link>
