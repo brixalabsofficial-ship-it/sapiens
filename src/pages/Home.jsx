@@ -2,12 +2,70 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, ShieldCheck, Truck, RotateCcw, 
-  ChevronRight, Award, Compass
+  ChevronRight, ChevronLeft, Award, Compass
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
 import { ProductGridSkeleton } from '../components/UIFeedback';
 import { fetchProducts } from '../services/api';
+
+const HERO_SLIDES = [
+  {
+    id: 1,
+    image: "https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg",
+    title: "Double-Breasted Wool Suit",
+    badge: "Atelier Bespoke",
+    slug: "sartorial-bespoke-double-breasted-wool-suit"
+  },
+  {
+    id: 2,
+    image: "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg",
+    title: "Milano Silk-Lapel Tuxedo",
+    badge: "Black-Tie Form",
+    slug: "milano-tailored-slim-fit-tuxedo-blazer"
+  },
+  {
+    id: 3,
+    image: "https://images.pexels.com/photos/2897883/pexels-photo-2897883.jpeg",
+    title: "Cashmere Trench Overcoat",
+    badge: "Winter Outerwear",
+    slug: "architectural-cashmere-blend-trench-overcoat"
+  },
+  {
+    id: 4,
+    image: "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg",
+    title: "Structured Navy Occasion Suit",
+    badge: "Sartorial Edition",
+    slug: "classic-structured-navy-occasion-suit"
+  }
+];
+
+const slideVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? '100%' : '-100%',
+    opacity: 0,
+    scale: 1.04
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      x: { type: "spring", stiffness: 280, damping: 28 },
+      opacity: { duration: 0.35 },
+      scale: { duration: 0.5 }
+    }
+  },
+  exit: (direction) => ({
+    x: direction < 0 ? '100%' : '-100%',
+    opacity: 0,
+    scale: 0.96,
+    transition: {
+      x: { type: "spring", stiffness: 280, damping: 28 },
+      opacity: { duration: 0.3 }
+    }
+  })
+};
 
 const CATEGORIES_DATA = [
   {
@@ -43,6 +101,8 @@ const CATEGORIES_DATA = [
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
     async function loadData() {
@@ -57,6 +117,32 @@ export default function Home() {
     }
     loadData();
   }, []);
+
+  // Auto-slide hero images every 4.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  };
+
+  const prevSlide = () => {
+    setDirection(-1);
+    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
+
+  const goToSlide = (idx) => {
+    setDirection(idx > currentSlide ? 1 : -1);
+    setCurrentSlide(idx);
+  };
+
+  const activeSlide = HERO_SLIDES[currentSlide];
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-12">
@@ -111,33 +197,83 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column / Mobile Hero Visual */}
+            {/* Right Column / Mobile Hero Visual with Smooth Slide Animation */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end pt-4 lg:pt-0">
-              <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-xl border-2 border-white group">
-                <img
-                  src="https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg"
-                  alt="SAPIENS Bespoke Tailoring"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    e.currentTarget.src = 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg';
-                  }}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+              <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl border-2 border-white group select-none">
+                
+                {/* Sliding Image Stage */}
+                <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                  <motion.img
+                    key={activeSlide.id}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    src={activeSlide.image}
+                    alt={activeSlide.title}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg';
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                </AnimatePresence>
+
+                {/* Subtle Gradient Overlay for contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/25 pointer-events-none" />
+
+                {/* Top Corner Slide Counter */}
+                <div className="absolute top-3.5 left-3.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest border border-white/20 z-10">
+                  {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
+                </div>
+
+                {/* Arrow Controls (Smooth hover on desktop) */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/75 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer active:scale-90"
+                  aria-label="Previous Slide"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/75 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer active:scale-90"
+                  aria-label="Next Slide"
+                >
+                  <ChevronRight size={16} />
+                </button>
+
+                {/* Bottom Navigation Indicators (Dashes) */}
+                <div className="absolute bottom-16 inset-x-0 flex items-center justify-center gap-1.5 z-10">
+                  {HERO_SLIDES.map((slide, idx) => (
+                    <button
+                      key={slide.id}
+                      onClick={() => goToSlide(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        currentSlide === idx 
+                          ? 'w-6 bg-[#FF5500]' 
+                          : 'w-2 bg-white/60 hover:bg-white'
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
 
                 {/* Minimal Overlay Badge */}
-                <div className="absolute bottom-4 inset-x-4 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl border border-white/60 flex items-center justify-between shadow-sm">
-                  <div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF5500] font-bold">
-                      Atelier Bespoke
+                <div className="absolute bottom-3 inset-x-3 bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-white/60 flex items-center justify-between shadow-sm z-10">
+                  <div className="min-w-0 pr-2">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF5500] font-bold block truncate">
+                      {activeSlide.badge}
                     </span>
-                    <p className="text-xs font-black text-slate-900 leading-none mt-0.5">
-                      Double-Breasted Wool Suit
+                    <p className="text-xs font-black text-slate-900 leading-tight mt-0.5 truncate">
+                      {activeSlide.title}
                     </p>
                   </div>
                   <Link
-                    to="/shop?category=Men"
+                    to={`/product/${activeSlide.slug}`}
                     className="w-8 h-8 rounded-full bg-black text-white hover:bg-[#FF5500] transition-colors flex items-center justify-center shrink-0"
-                    title="View Suits"
+                    title={`View ${activeSlide.title}`}
                   >
                     <ArrowRight size={14} />
                   </Link>
