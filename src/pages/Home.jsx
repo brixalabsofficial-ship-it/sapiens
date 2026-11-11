@@ -197,8 +197,8 @@ export default function Home() {
       {/* 1. HERO SECTION: FULL SCREEN ON MOBILE & EDITORIAL 2-COL ON DESKTOP */}
       <section className="relative overflow-hidden bg-[#FAF9F6] border-b border-black/[0.06]">
         
-        {/* MOBILE HERO: 100% Full Screen Pure Minimal Editorial (No Image on Mobile) */}
-        <div className="lg:hidden w-full h-[calc(100dvh-4rem)] min-h-[500px] flex flex-col justify-center items-center text-center px-6 py-12 pb-24 bg-[#FAF9F6] select-none">
+        {/* MOBILE HERO: Clean Editorial Typography (No Image on Mobile) */}
+        <div className="lg:hidden w-full flex flex-col justify-center items-center text-center px-6 py-12 sm:py-16 bg-[#FAF9F6] select-none">
           <div className="max-w-md mx-auto flex flex-col items-center space-y-7">
             
             {/* Season Minimal Badge */}
@@ -228,7 +228,7 @@ export default function Home() {
                 to="/shop"
                 className="flex-1 px-5 py-3.5 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-[#FF5500] transition-colors shadow-md flex items-center justify-center gap-2 group whitespace-nowrap active:scale-95"
               >
-                <span>Explore</span>
+                <span>Explore Collection</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
 
