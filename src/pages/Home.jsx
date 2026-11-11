@@ -211,8 +211,50 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
 
+              {/* Mobile Hero Visual Stage (Prominently visible directly on mobile devices) */}
+              <div className="lg:hidden w-full flex justify-center pt-4 pb-2">
+                <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl border-2 border-white">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={activeLookIdx}
+                      src={currentLook.image}
+                      alt={currentLook.label}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
+                      }}
+                      initial={{ opacity: 0, scale: 1.04 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.97 }}
+                      transition={{ duration: 0.4 }}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </AnimatePresence>
+
+                  {/* Mobile Corner Tag */}
+                  <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest border border-white/20">
+                    LOOK {currentLook.lookNumber} • SAPIENS
+                  </div>
+
+                  {/* Mobile Bottom Frosted Glass Info Pill */}
+                  <div className="absolute bottom-3 inset-x-3 bg-white/95 backdrop-blur-md p-3 rounded-xl border border-white/50 flex items-center justify-between shadow-lg">
+                    <div>
+                      <p className="text-[10px] font-mono text-[#FF5500] uppercase font-bold tracking-wider">
+                        {currentLook.season}
+                      </p>
+                      <p className="text-xs font-black text-slate-900 line-clamp-1">
+                        {currentLook.label}
+                      </p>
+                    </div>
+                    <span className="text-xs font-black text-[#FF5500] tabular-nums">
+                      {currentLook.price}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-8">
+              <div className="flex flex-wrap items-center gap-4 pt-4 sm:pt-8">
                 <Link
                   to="/shop"
                   className="px-8 py-4 rounded-full bg-black text-white text-xs font-extrabold uppercase tracking-widest hover:bg-[#FF5500] transition-colors shadow-lg shadow-black/10 flex items-center gap-2 group active:scale-95"
@@ -262,8 +304,8 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column: High-Fashion Model Portrait Stage */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            {/* Right Column: High-Fashion Model Portrait Stage (Desktop) */}
+            <div className="hidden lg:flex lg:col-span-5 justify-end">
               <div className="relative w-full max-w-[420px] aspect-[3/4] rounded-3xl overflow-hidden bg-slate-900 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border-2 border-white">
                 
                 <AnimatePresence mode="wait">
