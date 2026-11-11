@@ -249,67 +249,101 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* Floating Mobile Bottom Navigation Bar */}
+      {/* Floating Mobile Bottom Navigation Bar with SAPIENS Orange Accents */}
       <div className="lg:hidden fixed bottom-4 inset-x-4 z-40">
-        <nav className="bg-white/90 backdrop-blur-xl border border-black/10 px-3 py-2 shadow-xl rounded-xl flex items-center justify-around text-slate-800">
+        <nav className="relative bg-white/92 backdrop-blur-2xl border border-orange-500/25 px-2 py-1.5 shadow-[0_12px_36px_rgba(255,85,0,0.14),0_4px_16px_rgba(0,0,0,0.08)] rounded-2xl flex items-center justify-around text-slate-800 overflow-hidden">
+          
+          {/* Subtle Top Accent Shimmer Line */}
+          <div className="absolute top-0 inset-x-6 h-[2px] bg-gradient-to-r from-transparent via-[#FF5500] to-transparent opacity-80" />
+
+          {/* Home Link */}
           <Link
             to="/"
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 transition-colors ${
-              isActive('/') ? 'text-black font-extrabold' : 'text-slate-500 hover:text-black'
+            className={`relative flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 ${
+              isActive('/') 
+                ? 'text-[#FF5500] font-extrabold bg-orange-500/10' 
+                : 'text-slate-500 hover:text-[#FF5500]'
             }`}
           >
-            <Home size={19} />
-            <span className="text-[10px] font-semibold">Home</span>
+            <Home size={19} className={`transition-transform ${isActive('/') ? 'scale-110' : ''}`} />
+            <span className="text-[10px] tracking-tight">Home</span>
+            {isActive('/') && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] mt-0.5" />
+            )}
           </Link>
 
+          {/* Shop Link */}
           <Link
             to="/shop"
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 transition-colors ${
-              isActive('/shop') ? 'text-black font-extrabold' : 'text-slate-500 hover:text-black'
+            className={`relative flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 ${
+              isActive('/shop') 
+                ? 'text-[#FF5500] font-extrabold bg-orange-500/10' 
+                : 'text-slate-500 hover:text-[#FF5500]'
             }`}
           >
-            <Compass size={19} />
-            <span className="text-[10px] font-semibold">Shop</span>
+            <Compass size={19} className={`transition-transform ${isActive('/shop') ? 'scale-110' : ''}`} />
+            <span className="text-[10px] tracking-tight">Shop</span>
+            {isActive('/shop') && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] mt-0.5" />
+            )}
           </Link>
 
+          {/* Wishlist Link */}
           <Link
             to="/wishlist"
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 relative transition-colors ${
-              isActive('/wishlist') ? 'text-black font-extrabold' : 'text-slate-500 hover:text-black'
+            className={`relative flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 ${
+              isActive('/wishlist') 
+                ? 'text-[#FF5500] font-extrabold bg-orange-500/10' 
+                : 'text-slate-500 hover:text-[#FF5500]'
             }`}
           >
-            <Heart size={19} />
-            <span className="text-[10px] font-semibold">Saved</span>
+            <Heart size={19} className={`transition-transform ${isActive('/wishlist') ? 'scale-110' : ''}`} />
+            <span className="text-[10px] tracking-tight">Saved</span>
             {wishlist.length > 0 && (
-              <span className="absolute top-0 right-2 w-3.5 h-3.5 bg-black text-white text-[9px] font-bold flex items-center justify-center rounded-full">
+              <span className="absolute top-1 right-2 w-4 h-4 bg-[#FF5500] text-white text-[9px] font-bold flex items-center justify-center rounded-full shadow-sm shadow-orange-500/50">
                 {wishlist.length}
               </span>
             )}
-          </Link>
-
-          <Link
-            to="/cart"
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 relative transition-colors ${
-              isActive('/cart') ? 'text-black font-extrabold' : 'text-slate-500 hover:text-black'
-            }`}
-          >
-            <ShoppingBag size={19} />
-            <span className="text-[10px] font-semibold">Bag</span>
-            {itemCount > 0 && (
-              <span className="absolute top-0 right-1 w-3.5 h-3.5 bg-black text-white text-[9px] font-bold flex items-center justify-center rounded-full">
-                {itemCount}
-              </span>
+            {isActive('/wishlist') && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] mt-0.5" />
             )}
           </Link>
 
+          {/* Bag / Cart Link */}
           <Link
-            to="/admin"
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 transition-colors ${
-              isActive('/admin') ? 'text-black font-extrabold' : 'text-slate-500 hover:text-black'
+            to="/cart"
+            className={`relative flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 ${
+              isActive('/cart') 
+                ? 'text-[#FF5500] font-extrabold bg-orange-500/10' 
+                : 'text-slate-500 hover:text-[#FF5500]'
             }`}
           >
-            <ShieldCheck size={19} />
-            <span className="text-[10px] font-semibold">Admin</span>
+            <ShoppingBag size={19} className={`transition-transform ${isActive('/cart') ? 'scale-110' : ''}`} />
+            <span className="text-[10px] tracking-tight">Bag</span>
+            {itemCount > 0 && (
+              <span className="absolute top-1 right-1.5 w-4 h-4 bg-[#FF5500] text-white text-[9px] font-bold flex items-center justify-center rounded-full shadow-sm shadow-orange-500/50">
+                {itemCount}
+              </span>
+            )}
+            {isActive('/cart') && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] mt-0.5" />
+            )}
+          </Link>
+
+          {/* Admin Link */}
+          <Link
+            to="/admin"
+            className={`relative flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 ${
+              isActive('/admin') 
+                ? 'text-[#FF5500] font-extrabold bg-orange-500/10' 
+                : 'text-slate-500 hover:text-[#FF5500]'
+            }`}
+          >
+            <ShieldCheck size={19} className={`transition-transform ${isActive('/admin') ? 'scale-110' : ''}`} />
+            <span className="text-[10px] tracking-tight">Admin</span>
+            {isActive('/admin') && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] mt-0.5" />
+            )}
           </Link>
         </nav>
       </div>
