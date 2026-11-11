@@ -153,11 +153,11 @@ export default function Home() {
         </div>
 
         {/* Hero Content Stage */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10 sm:py-16 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
             {/* Left Column: Bold Typography & Look Selector */}
-            <div className="lg:col-span-7 flex flex-col justify-between">
+            <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left justify-between">
               
               <AnimatePresence mode="wait">
                 <motion.div
@@ -166,10 +166,10 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="space-y-5"
+                  className="space-y-5 flex flex-col items-center lg:items-start"
                 >
                   {/* Collection Header Tag */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center lg:justify-start gap-3">
                     <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#FF5500] font-bold">
                       LOOK {currentLook.lookNumber} / 03
                     </span>
@@ -188,12 +188,12 @@ export default function Home() {
                   </h1>
 
                   {/* Editorial Description */}
-                  <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-xl font-normal leading-relaxed">
+                  <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-xl font-normal leading-relaxed mx-auto lg:mx-0">
                     {currentLook.description}
                   </p>
 
                   {/* Atelier Specs Pills */}
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-2 pt-2">
                     {currentLook.specs.map((spec, i) => (
                       <div 
                         key={i} 
@@ -211,8 +211,8 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Mobile Hero Visual Stage (Prominently visible directly on mobile devices) */}
-              <div className="lg:hidden w-full flex justify-center pt-4 pb-2">
+              {/* Mobile Hero Visual Stage (Centered & Prominently positioned on mobile) */}
+              <div className="lg:hidden w-full flex justify-center pt-5 pb-3">
                 <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl border-2 border-white">
                   <AnimatePresence mode="wait">
                     <motion.img
@@ -254,7 +254,7 @@ export default function Home() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-4 sm:pt-8">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4 sm:pt-8 w-full">
                 <Link
                   to="/shop"
                   className="px-8 py-4 rounded-full bg-black text-white text-xs font-extrabold uppercase tracking-widest hover:bg-[#FF5500] transition-colors shadow-lg shadow-black/10 flex items-center gap-2 group active:scale-95"
@@ -273,11 +273,11 @@ export default function Home() {
               </div>
 
               {/* Interactive Lookbook Tabs Selector */}
-              <div className="mt-10 pt-6 border-t border-slate-200/70">
-                <p className="text-[10px] uppercase font-mono tracking-widest text-slate-400 mb-3">
+              <div className="mt-8 sm:mt-10 pt-6 border-t border-slate-200/70 w-full">
+                <p className="text-[10px] uppercase font-mono tracking-widest text-slate-400 mb-3 text-center lg:text-left">
                   Select Curated Look:
                 </p>
-                <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3.5">
                   {EDITORIAL_LOOKS.map((item, idx) => (
                     <button
                       key={item.id}
@@ -423,15 +423,15 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 4 Category Rounded Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        {/* 4 Category Clean Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5">
           {CATEGORIES_DATA.map((cat, idx) => (
             <Link
               key={idx}
               to={`/shop?category=${cat.category}`}
-              className="sapiens-modern-card group flex flex-col bg-white rounded-3xl p-3 sm:p-4 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)]"
+              className="sapiens-modern-card group flex flex-col bg-white rounded-none sm:rounded-md overflow-hidden border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
             >
-              <div className={`relative aspect-square w-full rounded-2xl bg-gradient-to-b ${cat.gradient} overflow-hidden p-3 flex items-center justify-center`}>
+              <div className="relative aspect-[4/5] sm:aspect-square w-full overflow-hidden flex items-center justify-center bg-slate-100">
                 <img
                   src={cat.image}
                   alt={cat.name}
@@ -439,21 +439,21 @@ export default function Home() {
                   onError={(e) => {
                     e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
                   }}
-                  className="w-full h-full object-cover rounded-xl group-hover:scale-108 transition-transform duration-500 ease-out"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
               </div>
 
-              <div className="pt-3.5 pb-1 px-1 flex items-center justify-between">
+              <div className="p-2.5 sm:p-3 flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-800 group-hover:text-[#FF5500] transition-colors">
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#FF5500] transition-colors line-clamp-1">
                     {cat.name}
                   </h3>
-                  <span className="text-xs text-slate-400 font-medium">
+                  <span className="text-[10px] sm:text-xs text-slate-400 font-medium">
                     {cat.itemCount}
                   </span>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors">
-                  <ArrowRight size={14} />
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                  <ArrowRight size={12} />
                 </div>
               </div>
             </Link>
@@ -465,7 +465,7 @@ export default function Home() {
       {/* 3. FEATURED PRODUCTS GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex items-end justify-between mb-6 sm:mb-8">
           <div>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FF5500]">
               <span className="w-5 h-[2px] bg-[#FF5500] inline-block" />
@@ -488,7 +488,7 @@ export default function Home() {
         {loading ? (
           <ProductGridSkeleton count={8} />
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5">
             {featuredProducts.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
