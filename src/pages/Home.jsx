@@ -197,96 +197,47 @@ export default function Home() {
       {/* 1. HERO SECTION: FULL SCREEN ON MOBILE & EDITORIAL 2-COL ON DESKTOP */}
       <section className="relative overflow-hidden bg-[#FAF9F6] border-b border-black/[0.06]">
         
-        {/* MOBILE HERO: 100% Full Screen Immersive Editorial Hero */}
-        <div className="lg:hidden relative w-full h-[calc(100dvh-4rem)] min-h-[580px] overflow-hidden flex flex-col justify-between p-5 pb-24 select-none">
-          
-          {/* Full-bleed background sliding images */}
-          <AnimatePresence initial={false} custom={direction} mode="popLayout">
-            <motion.img
-              key={activeSlide.id}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              src={activeSlide.image}
-              alt={activeSlide.title}
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                e.currentTarget.src = 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg';
-              }}
-              className="absolute inset-0 w-full h-full object-cover object-top"
-            />
-          </AnimatePresence>
-
-          {/* High-Contrast Editorial Vignette Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/40 to-black/35 pointer-events-none" />
-
-          {/* Mobile Top Row: Season Pill + Slide Counter */}
-          <div className="relative z-10 flex items-center justify-between pt-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/45 backdrop-blur-md border border-white/20 rounded-full text-white text-[10px] font-mono uppercase tracking-[0.2em] font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] animate-pulse" />
-              <span>Autumn / Winter 2026</span>
-            </div>
-
-            <div className="bg-black/45 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest border border-white/20">
-              {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
-            </div>
-          </div>
-
-          {/* Mobile Bottom Content Block */}
-          <div className="relative z-10 space-y-4">
+        {/* MOBILE HERO: 100% Full Screen Pure Minimal Editorial (No Image on Mobile) */}
+        <div className="lg:hidden w-full h-[calc(100dvh-4rem)] min-h-[500px] flex flex-col justify-center items-center text-center px-6 py-12 pb-24 bg-[#FAF9F6] select-none">
+          <div className="max-w-md mx-auto flex flex-col items-center space-y-7">
             
-            {/* Active Look Badge */}
-            <div className="inline-block bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 rounded-full text-white text-[10px] font-mono uppercase tracking-widest font-semibold">
-              {activeSlide.badge} • {activeSlide.title}
+            {/* Season Minimal Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-black/[0.08] rounded-full shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-800 font-bold">
+                Autumn / Winter 2026 Collection
+              </span>
             </div>
 
-            {/* High-Impact Headline */}
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-[1.06]">
-              Bespoke Elegance.
-              <span className="block text-[#FF5500] font-serif italic font-normal mt-0.5">
+            {/* Bold, Clean Headline */}
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-[1.08] space-y-1">
+              <span className="block">Bespoke Elegance.</span>
+              <span className="block text-[#FF5500] font-serif italic font-normal mt-1.5">
                 Modern Sartorial.
               </span>
             </h1>
 
-            {/* Direct 1-Sentence Subtitle */}
-            <p className="text-xs sm:text-sm text-white/80 font-normal leading-relaxed max-w-sm">
+            {/* 1-Sentence Subtitle with clean max-width */}
+            <p className="text-sm sm:text-base text-slate-600 max-w-sm font-normal leading-relaxed">
               Handcrafted Italian wool and architectural tailoring, engineered for life's defining occasions.
             </p>
 
             {/* Action Buttons: Horizontal on Mobile */}
-            <div className="flex flex-row items-center gap-2.5 pt-1 w-full">
+            <div className="flex flex-row items-center justify-center gap-3 pt-2 w-full max-w-xs">
               <Link
                 to="/shop"
-                className="flex-1 py-3.5 rounded-full bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5 shadow-lg active:scale-95"
+                className="flex-1 px-5 py-3.5 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-[#FF5500] transition-colors shadow-md flex items-center justify-center gap-2 group whitespace-nowrap active:scale-95"
               >
                 <span>Explore</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
 
               <Link
                 to="/shop?category=Men"
-                className="flex-1 py-3.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 text-xs font-bold uppercase tracking-wider text-center active:scale-95"
+                className="flex-1 px-5 py-3.5 rounded-full bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all border border-slate-300 shadow-xs flex items-center justify-center text-center whitespace-nowrap active:scale-95"
               >
                 <span>Occasion Suits</span>
               </Link>
-            </div>
-
-            {/* Slide Navigation Dashes */}
-            <div className="flex items-center justify-center gap-1.5 pt-1">
-              {HERO_SLIDES.map((slide, idx) => (
-                <button
-                  key={slide.id}
-                  onClick={() => goToSlide(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    currentSlide === idx 
-                      ? 'w-6 bg-[#FF5500]' 
-                      : 'w-2 bg-white/50'
-                  }`}
-                  aria-label={`Slide ${idx + 1}`}
-                />
-              ))}
             </div>
 
           </div>
