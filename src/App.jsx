@@ -72,18 +72,23 @@ export default function App() {
 
           <Footer />
           <Toaster 
-            position="bottom-right" 
+            position="top-center" 
+            containerStyle={{
+              top: 32
+            }}
             toastOptions={{
               duration: 3000,
               style: {
-                borderRadius: '0px',
-                background: '#121212',
+                borderRadius: '9999px',
+                background: 'rgba(18, 18, 18, 0.94)',
+                backdropFilter: 'blur(16px)',
                 color: '#fff',
-                fontSize: '12px',
-                fontFamily: 'inherit',
-                border: '1px solid rgba(255,255,255,0.1)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                fontSize: '12.5px',
+                fontWeight: '600',
+                padding: '10px 22px',
+                boxShadow: '0 12px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(255, 85, 0, 0.15)',
+                border: '1px solid rgba(255, 85, 0, 0.35)',
+                letterSpacing: '0.02em'
               }
             }}
           />
