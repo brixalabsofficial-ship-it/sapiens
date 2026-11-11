@@ -67,6 +67,38 @@ const slideVariants = {
   })
 };
 
+// Scroll In-and-Out Animation Variants (animates in when scrolled into view, animates out when scrolled away)
+const scrollFadeVariants = {
+  hidden: { opacity: 0, y: 32, scale: 0.98 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+const scrollStaggerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.04
+    }
+  }
+};
+
+const scrollItemVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
 const CATEGORIES_DATA = [
   {
     name: "Occasion & Suits",
@@ -199,7 +231,13 @@ export default function Home() {
         
         {/* MOBILE HERO: Clean Editorial Typography (No Image on Mobile) */}
         <div className="lg:hidden w-full flex flex-col justify-center items-center text-center px-6 py-12 sm:py-16 bg-[#FAF9F6] select-none">
-          <div className="max-w-md mx-auto flex flex-col items-center space-y-7">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+            variants={scrollFadeVariants}
+            className="max-w-md mx-auto flex flex-col items-center space-y-7"
+          >
             
             {/* Season Minimal Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-black/[0.08] rounded-full shadow-xs">
@@ -240,11 +278,17 @@ export default function Home() {
               </Link>
             </div>
 
-          </div>
+          </motion.div>
         </div>
 
         {/* DESKTOP HERO: Clean 2-Column Editorial Stage */}
-        <div className="hidden lg:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          variants={scrollFadeVariants}
+          className="hidden lg:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24"
+        >
           <div className="grid grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Left Column: Clean Editorial Messaging */}
@@ -376,44 +420,50 @@ export default function Home() {
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
         {/* Trust Indicators Minimal Row */}
         <div className="border-t border-black/[0.06] bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-slate-800">
-              <div className="flex items-center gap-3">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.25 }}
+              variants={scrollStaggerVariants}
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 text-slate-800"
+            >
+              <motion.div variants={scrollItemVariants} className="flex items-center gap-3">
                 <Truck size={18} className="text-[#FF5500] shrink-0" />
                 <div className="text-xs">
                   <p className="font-bold">Complimentary Delivery</p>
                   <p className="text-[11px] text-slate-400">On all orders above ₹3,000</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3">
+              <motion.div variants={scrollItemVariants} className="flex items-center gap-3">
                 <Award size={18} className="text-[#FF5500] shrink-0" />
                 <div className="text-xs">
                   <p className="font-bold">Bespoke Italian Craft</p>
                   <p className="text-[11px] text-slate-400">Super 150s & Full Canvas</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3">
+              <motion.div variants={scrollItemVariants} className="flex items-center gap-3">
                 <RotateCcw size={18} className="text-[#FF5500] shrink-0" />
                 <div className="text-xs">
                   <p className="font-bold">7-Day Return Policy</p>
                   <p className="text-[11px] text-slate-400">Doorstep pickup assistance</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3">
+              <motion.div variants={scrollItemVariants} className="flex items-center gap-3">
                 <Compass size={18} className="text-[#FF5500] shrink-0" />
                 <div className="text-xs">
                   <p className="font-bold">Concierge Support</p>
                   <p className="text-[11px] text-slate-400">Styling & sizing via WhatsApp</p>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
 
@@ -422,7 +472,13 @@ export default function Home() {
       {/* 2. SHOP BY CATEGORY SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="flex items-end justify-between mb-8">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={scrollFadeVariants}
+          className="flex items-end justify-between mb-8"
+        >
           <div>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FF5500]">
               <span className="w-5 h-[2px] bg-[#FF5500] inline-block" />
@@ -440,51 +496,64 @@ export default function Home() {
             <span>View All Categories</span>
             <ChevronRight size={16} />
           </Link>
-        </div>
+        </motion.div>
 
-        {/* 4 Category Editorial Full-Bleed Lookbook Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5">
+        {/* 4 Category Editorial Full-Bleed Lookbook Cards with Staggered Scroll In-and-Out */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+          variants={scrollStaggerVariants}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5"
+        >
           {CATEGORIES_DATA.map((cat, idx) => (
-            <Link
-              key={idx}
-              to={`/shop?category=${cat.category}`}
-              className="group relative aspect-[3/4] w-full overflow-hidden rounded-none sm:rounded-md bg-slate-900 shadow-md block border border-black/5"
-            >
-              {/* Full-Bleed Image Spanning 100% of the Card */}
-              <img
-                src={cat.image}
-                alt={cat.name}
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
-                }}
-                className="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 ease-out brightness-[0.92]"
-              />
+            <motion.div key={idx} variants={scrollItemVariants}>
+              <Link
+                to={`/shop?category=${cat.category}`}
+                className="group relative aspect-[3/4] w-full overflow-hidden rounded-none sm:rounded-md bg-slate-900 shadow-md block border border-black/5"
+              >
+                {/* Full-Bleed Image Spanning 100% of the Card */}
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://images.pexels.com/photos/1342609/pexels-photo-1342609.jpeg';
+                  }}
+                  className="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 ease-out brightness-[0.92]"
+                />
 
-              {/* Bottom Editorial Dark Gradient Overlay with High-Contrast Typography */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-3 sm:p-5">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FF5500] font-bold mb-1">
-                  {cat.itemCount}
-                </span>
-                <div className="flex items-end justify-between">
-                  <h3 className="text-xs sm:text-base font-black text-white uppercase tracking-tight group-hover:text-[#FF5500] transition-colors leading-tight">
-                    {cat.name}
-                  </h3>
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors shrink-0 ml-1.5">
-                    <ArrowRight size={13} />
+                {/* Bottom Editorial Dark Gradient Overlay with High-Contrast Typography */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-3 sm:p-5">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FF5500] font-bold mb-1">
+                    {cat.itemCount}
+                  </span>
+                  <div className="flex items-end justify-between">
+                    <h3 className="text-xs sm:text-base font-black text-white uppercase tracking-tight group-hover:text-[#FF5500] transition-colors leading-tight">
+                      {cat.name}
+                    </h3>
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-[#FF5500] group-hover:text-white flex items-center justify-center transition-colors shrink-0 ml-1.5">
+                      <ArrowRight size={13} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </section>
 
       {/* 3. FEATURED PRODUCTS AUTO-SLIDE CAROUSEL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="flex items-end justify-between mb-6 sm:mb-8">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={scrollFadeVariants}
+          className="flex items-end justify-between mb-6 sm:mb-8"
+        >
           <div>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FF5500]">
               <span className="w-5 h-[2px] bg-[#FF5500] inline-block" />
@@ -524,12 +593,16 @@ export default function Home() {
               <ArrowRight size={15} />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {loading ? (
           <ProductGridSkeleton count={4} />
         ) : (
-          <div 
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
+            variants={scrollFadeVariants}
             ref={carouselRef}
             onMouseEnter={() => setIsCarouselPaused(true)}
             onMouseLeave={() => setIsCarouselPaused(false)}
@@ -545,14 +618,20 @@ export default function Home() {
                 <ProductCard product={p} />
               </div>
             ))}
-          </div>
+          </motion.div>
         )}
 
       </section>
 
       {/* 4. MODERN BRAND PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative bg-[#111111] text-white rounded-3xl sm:rounded-[2.5rem] p-8 sm:p-14 overflow-hidden shadow-2xl">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          variants={scrollFadeVariants}
+          className="relative bg-[#111111] text-white rounded-3xl sm:rounded-[2.5rem] p-8 sm:p-14 overflow-hidden shadow-2xl"
+        >
           
           <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-[#FF5500]/25 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute right-10 top-0 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
@@ -610,7 +689,7 @@ export default function Home() {
 
           </div>
 
-        </div>
+        </motion.div>
       </section>
 
     </div>
