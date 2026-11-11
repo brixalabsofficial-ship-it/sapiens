@@ -56,7 +56,7 @@ const EDITORIAL_LOOKS = [
     headlinePrimary: "Sculptural Form",
     headlineAccent: "Cashmere Architecture",
     description: "Double-faced cashmere and virgin wool blend tailored in an editorial silhouette with broad notched lapels, horn closure, and unstructured fluid drape.",
-    image: "https://images.pexels.com/photos/3760854/pexels-photo-3760854.jpeg",
+    image: "https://images.pexels.com/photos/2897883/pexels-photo-2897883.jpeg",
     price: "₹15,499",
     specs: [
       { label: "Composition", val: "Cashmere & Virgin Wool" },

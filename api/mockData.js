@@ -56,8 +56,8 @@ export const initialProducts = [
     isNew: false,
     description: "Double-faced cashmere and virgin wool blend tailored in an editorial silhouette with broad notched lapels and horn closure.",
     images: [
-      "https://images.pexels.com/photos/3760854/pexels-photo-3760854.jpeg",
-      "https://images.pexels.com/photos/2897883/pexels-photo-2897883.jpeg"
+      "https://images.pexels.com/photos/2897883/pexels-photo-2897883.jpeg",
+      "https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg"
     ],
     variants: [
       { id: "v-3-m", size: "M", color: "Camel Tan", stock: 9 },
