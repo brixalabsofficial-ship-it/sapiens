@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, ShieldCheck, Truck, RotateCcw, 
@@ -104,11 +104,15 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
 
+  // Featured Products Carousel State
+  const carouselRef = useRef(null);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+
   useEffect(() => {
     async function loadData() {
       try {
         const prods = await fetchProducts();
-        setFeaturedProducts(prods.slice(0, 8));
+        setFeaturedProducts(prods.slice(0, 12));
       } catch (err) {
         console.error(err);
       } finally {
@@ -126,6 +130,49 @@ export default function Home() {
     }, 4500);
     return () => clearInterval(timer);
   }, []);
+
+  // Auto-slide featured products carousel every 3.5 seconds
+  useEffect(() => {
+    if (isCarouselPaused || !featuredProducts.length) return;
+
+    const interval = setInterval(() => {
+      const container = carouselRef.current;
+      if (!container) return;
+
+      const card = container.firstElementChild;
+      const step = card ? card.offsetWidth + 16 : 300;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      if (container.scrollLeft >= maxScroll - 15) {
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isCarouselPaused, featuredProducts]);
+
+  const scrollPrevProducts = () => {
+    const container = carouselRef.current;
+    if (!container) return;
+    const card = container.firstElementChild;
+    const step = card ? card.offsetWidth + 16 : 300;
+    container.scrollBy({ left: -step, behavior: 'smooth' });
+  };
+
+  const scrollNextProducts = () => {
+    const container = carouselRef.current;
+    if (!container) return;
+    const card = container.firstElementChild;
+    const step = card ? card.offsetWidth + 16 : 300;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft >= maxScroll - 15) {
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  };
 
   const nextSlide = () => {
     setDirection(1);
@@ -387,35 +434,69 @@ export default function Home() {
 
       </section>
 
-      {/* 3. FEATURED PRODUCTS GRID */}
+      {/* 3. FEATURED PRODUCTS AUTO-SLIDE CAROUSEL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="flex items-end justify-between mb-6 sm:mb-8">
           <div>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FF5500]">
               <span className="w-5 h-[2px] bg-[#FF5500] inline-block" />
-              <span>Featured Products</span>
+              <span>Featured Collection</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
               Best Sellers
             </h2>
           </div>
 
-          <Link
-            to="/shop"
-            className="text-xs sm:text-sm font-bold text-slate-700 hover:text-[#FF5500] flex items-center gap-1 transition-colors"
-          >
-            <span>View All Products</span>
-            <ChevronRight size={16} />
-          </Link>
+          <div className="flex items-center gap-3">
+            {/* Carousel Navigation Arrows */}
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={scrollPrevProducts}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-black hover:text-white text-slate-700 border border-slate-200 transition-colors flex items-center justify-center shadow-xs active:scale-90 cursor-pointer"
+                aria-label="Previous products"
+                title="Previous"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={scrollNextProducts}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-black hover:text-white text-slate-700 border border-slate-200 transition-colors flex items-center justify-center shadow-xs active:scale-90 cursor-pointer"
+                aria-label="Next products"
+                title="Next"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+
+            <Link
+              to="/shop"
+              className="text-xs sm:text-sm font-bold text-slate-700 hover:text-[#FF5500] flex items-center gap-1 transition-colors pl-2"
+            >
+              <span className="hidden sm:inline">View All</span>
+              <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
 
         {loading ? (
-          <ProductGridSkeleton count={8} />
+          <ProductGridSkeleton count={4} />
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5">
+          <div 
+            ref={carouselRef}
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+            onTouchStart={() => setIsCarouselPaused(true)}
+            onTouchEnd={() => setIsCarouselPaused(false)}
+            className="flex gap-3 sm:gap-5 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth"
+          >
             {featuredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <div 
+                key={p.id} 
+                className="w-[68vw] sm:w-[270px] md:w-[285px] lg:w-[295px] shrink-0 snap-start"
+              >
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
         )}
